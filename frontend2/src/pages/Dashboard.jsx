@@ -22,6 +22,16 @@ export const Dashboard = () => {
       setBalance(response.data.balance);
     };
     fetchData();
+    const fetchUser = async()=>{
+      const response = await axios.get("https://paytm-qdku.onrender.com/api/v1/user/profile",{
+        headers: {
+          Authorization: "Bearer "+localStorage.getItem("token"),
+        }
+      })
+      console.log(response.data.username);
+      // setName(response.data.username);
+    };
+    fetchUser();  
   }, []);
   
   return (
