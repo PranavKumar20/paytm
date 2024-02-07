@@ -143,10 +143,7 @@ router.get("/profile", authMiddleware, async (req, res) => {
         _id: req.userId
     })
     res.json({
-        username: user.username,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        _id: user._id
+        user: user
     })
 })
 
