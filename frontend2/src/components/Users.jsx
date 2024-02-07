@@ -7,6 +7,7 @@ export const Users = () => {
   // Replace with backend call
   const [users, setUsers] = useState([]);
   const [filter, setFilter] = useState("");
+  const [me,setMe] = useState(null);
 
   useEffect(() => {
     axios
@@ -15,6 +16,19 @@ export const Users = () => {
         setUsers(response.data.user);
       });
   }, [filter]);
+
+  useEffect(()=>{
+      const fetchMe = async()=>{
+        const response = await axios.get("https://paytm-qdku.onrender.com/api/v1/user/profile",{
+          headers: {
+            Authorization: "Bearer "+localStorage.getItem("token"),
+          }
+        })
+        // console.log(response.data.user.firstName);
+        setMe(response.data.user._id);
+      };
+      fetchMe();
+    },[])
 
   const handleSearchInput = (e)=>{
     setFilter(e.target.value);
@@ -32,7 +46,7 @@ export const Users = () => {
         ></input>
       </div>
       <div>
-        {users.map((user) => (
+        {users.filter((user)=>user._id !==me).map((user) => (
           <User user={user} />
         ))}
       </div>

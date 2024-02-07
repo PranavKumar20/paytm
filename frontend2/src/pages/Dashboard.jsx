@@ -18,7 +18,7 @@ export const Dashboard = () => {
           },
         }
       );
-      // console.log(response);
+      // console.log(response.data);
       setBalance(response.data.balance);
     };
     fetchData();
@@ -28,8 +28,8 @@ export const Dashboard = () => {
           Authorization: "Bearer "+localStorage.getItem("token"),
         }
       })
-      console.log(response.data.username);
-      // setName(response.data.username);
+      // console.log(response.data.user.firstName);
+      setName(response.data.user.firstName);
     };
     fetchUser();  
   }, []);
