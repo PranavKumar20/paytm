@@ -42,7 +42,7 @@ router.post("/signup", async (req, res) => {
     // ----- created new account -------- 
     await Account.create({
         userId,
-        balance: 1+Math.random()*10000
+        balance: 1 + Math.random() * 10000
     })
 
     // ------------------------------------
@@ -78,7 +78,7 @@ router.post("/signin", async (req, res) => {
 
     if (user) {
         const token = jwt.sign({
-            userId:user._id
+            userId: user._id
         }, JWT_SECRET);
 
         res.status(200).json({
@@ -135,6 +135,18 @@ router.get("/bulk", async (req, res) => {
             lastName: user.lastName,
             _id: user._id
         }))
+    })
+})
+
+router.get("/profile", authMiddleware, async (req, res) => {
+    const user = await User.findOne({
+        _id: req.userId
+    })
+    res.json({
+        username: user.username,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        _id: user._id
     })
 })
 
